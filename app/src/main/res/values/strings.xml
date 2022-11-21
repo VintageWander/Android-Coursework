@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Android CW</string>
+    <string name="save">Save</string>
+    <string name="description">Description</string>
+    <string name="no">NO</string>
+    <string name="yes">YES</string>
+    <string name="vehicle">Vehicle</string>
+    <string name="risk_accessment">Risk accessment</string>
+    <string name="enter_destination">Enter destination</string>
+    <string name="click_here_to_set_date">Click here to set date</string>
+    <string name="enter_trip_name">Enter trip name</string>
+    <string name="upload_to_cloud">Upload to cloud</string>
+    <string name="list_of_trips">List of trips</string>
+    <string name="clear">Clear</string>
+    <string name="search_trip_here">Search trip here...</string>
+    <string name="clear_trips">Clear trips</string>
+    <string name="Add">+</string>
+    <string name="title_activity_expense_details">ExpenseDetails</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+</resources>

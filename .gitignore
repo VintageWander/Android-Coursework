@@ -2,6 +2,12 @@
 .gradle/
 build/
 
+# Env file
+app/src/main/assets/env
+
+# Mac files
+.DS_Store
+
 # Local configuration file (sdk path, etc)
 local.properties
 
