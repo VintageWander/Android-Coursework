@@ -38,6 +38,11 @@ public class AddExpense extends AppCompatActivity {
 
         // Get the expenseItem send from the expense list view
         Expense expenseItem = (Expense) intent.getSerializableExtra("expenseItem");
+        Expense expense = null;
+        if (expenseItem != null) {
+            expense = db.getExpense(expenseItem.getTripId(), expenseItem.getId());
+        }
+
 
         // Get the inputs
         EditText inputExpenseAmount = findViewById(R.id.inputExpenseAmount);
@@ -45,10 +50,10 @@ public class AddExpense extends AppCompatActivity {
         EditText inputExpenseComment = findViewById(R.id.inputExpenseComment);
         Spinner expenseDropdown = findViewById(R.id.expenseSpinner);
 
-        if(expenseItem != null) {
-            inputExpenseAmount.setText(expenseItem.getAmount());
-            inputExpenseDate.setText(expenseItem.getDate());
-            inputExpenseComment.setText(expenseItem.getComments());
+        if(expense != null) {
+            inputExpenseAmount.setText(expense.getAmount());
+            inputExpenseDate.setText(expense.getDate());
+            inputExpenseComment.setText(expense.getComments());
         }
 
         // Initialize the dropdown
@@ -56,8 +61,8 @@ public class AddExpense extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         expenseDropdown.setAdapter(adapter);
 
-        if (expenseItem != null) {
-            int position = Arrays.asList(items).indexOf(expenseItem.getType());
+        if (expense != null) {
+            int position = Arrays.asList(items).indexOf(expense.getType());
             expenseDropdown.setSelection(position);
         }
 
@@ -72,6 +77,7 @@ public class AddExpense extends AppCompatActivity {
         btnBack.setOnClickListener(view -> this.finish());
 
         Button btnSave = findViewById(R.id.btnSaveExpense);
+        Expense finalExpense = expense;
         btnSave.setOnClickListener(view -> {
             String regex = "^[a-zA-Z0-9-_ ]{3,50}$";
             String numberRegex = "^[\\d]{3,50}$";
@@ -96,9 +102,9 @@ public class AddExpense extends AppCompatActivity {
             builder.setPositiveButton(
                     "Save expense",
                     (dialog, id) -> {
-                        if (expenseItem != null) {
+                        if (finalExpense != null) {
                             db.updateExpense(
-                                    expenseItem.getTripId(),
+                                    finalExpense.getId(),
                                     expenseDropdown.getSelectedItem().toString(),
                                     inputExpenseAmount.getText().toString(),
                                     inputExpenseDate.getText().toString(),

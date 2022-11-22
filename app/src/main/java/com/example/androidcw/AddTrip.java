@@ -35,6 +35,10 @@ public class AddTrip extends AppCompatActivity {
         db = new DBHelper(this);
         Intent intent = getIntent();
         Trip tripItem = (Trip) intent.getSerializableExtra("tripItem");
+        Trip trip = null;
+        if (tripItem != null) {
+            trip = db.getTrip(tripItem.getId());
+        }
 
         // Get all the fields
         EditText inputTripName = findViewById(R.id.inputTripName);
@@ -44,12 +48,12 @@ public class AddTrip extends AppCompatActivity {
         Spinner vehicleDropdown = findViewById(R.id.vehicleSpinner);
         EditText inputDescription = findViewById(R.id.inputDescription);
 
-        if (tripItem != null) {
-            inputTripName.setText(tripItem.getName());
-            inputDate.setText(tripItem.getDate());
-            inputDestination.setText(tripItem.getDestination());
-            riskSwitch.setChecked(Objects.equals(tripItem.getRiskAssessment(), "YES"));
-            inputDescription.setText(tripItem.getDescription());
+        if (trip != null) {
+            inputTripName.setText(trip.getName());
+            inputDate.setText(trip.getDate());
+            inputDestination.setText(trip.getDestination());
+            riskSwitch.setChecked(Objects.equals(trip.getRiskAssessment(), "YES"));
+            inputDescription.setText(trip.getDescription());
         }
 
         // Initialize the dropdown
@@ -57,8 +61,8 @@ public class AddTrip extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         vehicleDropdown.setAdapter(adapter);
 
-        if(tripItem != null) {
-            int spinnerPosition = Arrays.asList(items).indexOf(tripItem.getVehicle());
+        if(trip != null) {
+            int spinnerPosition = Arrays.asList(items).indexOf(trip.getVehicle());
             vehicleDropdown.setSelection(spinnerPosition);
         }
 
@@ -83,6 +87,7 @@ public class AddTrip extends AppCompatActivity {
 
         // Save button logic
         Button btnSave = findViewById(R.id.btnSave);
+        Trip finalTrip = trip;
         btnSave.setOnClickListener(view -> {
             String regex = "^[a-zA-Z0-9-_ ]{3,50}$";
             String dateRegex = "^(0[1-9]|1[0-9]|2[0-9]|(3[0-1]))[/](0[1-9]|1[0-2])[/]([12][0-9][0-9][0-9])$";
@@ -111,9 +116,9 @@ public class AddTrip extends AppCompatActivity {
             builder.setPositiveButton(
                     "Save trip",
                     (dialog, id) -> {
-                        if (tripItem != null) {
+                        if (finalTrip != null) {
                             db.updateTrip(
-                                    tripItem.getId(),
+                                    finalTrip.getId(),
                                     inputTripName.getText().toString(),
                                     inputDate.getText().toString(),
                                     inputDestination.getText().toString(),

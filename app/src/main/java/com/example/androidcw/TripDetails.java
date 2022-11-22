@@ -68,42 +68,43 @@ public class TripDetails extends AppCompatActivity {
 
         // Get the data from the intent sent from the previous screen
         Trip tripItem = (Trip) intent.getSerializableExtra("tripItem");
+        Trip trip = db.getTrip(tripItem.getId());
 
         // Get all the values from the trip item and render them
         TextView textTripName = findViewById(R.id.textTripName);
-        textTripName.setText(tripItem.getName());
+        textTripName.setText(trip.getName());
 
         TextView textDestination = findViewById(R.id.textDestination);
-        textDestination.setText(tripItem.getDestination());
+        textDestination.setText(trip.getDestination());
 
         TextView textDate = findViewById(R.id.textDate);
-        textDate.setText(tripItem.getDate());
+        textDate.setText(trip.getDate());
 
         TextView textRisk = findViewById(R.id.textRisk);
-        textRisk.setText(tripItem.getRiskAssessment());
+        textRisk.setText(trip.getRiskAssessment());
 
         TextView textDescription = findViewById(R.id.textDescription);
-        textDescription.setText(tripItem.getDescription());
+        textDescription.setText(trip.getDescription());
 
         TextView textVehicle = findViewById(R.id.textVehicle);
-        textVehicle.setText(tripItem.getVehicle());
+        textVehicle.setText(trip.getVehicle());
 
         Button btnBack2 = findViewById(R.id.btnBack2);
         btnBack2.setOnClickListener(view -> this.finish());
 
         Button btnEdit = findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(view ->
-                startActivity(new Intent(this, AddTrip.class).putExtra("tripItem", tripItem))
+                startActivity(new Intent(this, AddTrip.class).putExtra("tripItem", trip))
         );
 
         Button btnDelete = findViewById(R.id.btnDeleteTrip);
         btnDelete.setOnClickListener(view -> {
-            db.deleteTrip(tripItem.getId());
+            db.deleteTrip(trip.getId());
             this.finish();
         });
 
         // Render the list of expenses
-        expenses = db.getExpenses(tripItem.getId());
+        expenses = db.getExpenses(trip.getId());
         expenseListView = findViewById(R.id.expenseListView);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, expenses);
         expenseListView.setAdapter(adapter);
@@ -112,14 +113,14 @@ public class TripDetails extends AppCompatActivity {
             startActivity(
                 new Intent(this, ExpenseDetails.class)
                         .putExtra("expenseItem", adapter.getItem(id))
-                        .putExtra("tripItem", tripItem)
+                        .putExtra("tripItem", trip)
         ));
 
         Button btnAddExpense = findViewById(R.id.btnAddExpense);
         btnAddExpense.setOnClickListener(view ->
             startActivity(
                     new Intent(this, AddExpense.class)
-                            .putExtra("tripItem", tripItem)
+                            .putExtra("tripItem", trip)
             )
         );
     }
