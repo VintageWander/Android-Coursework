@@ -20,10 +20,10 @@ public class Expense implements Serializable {
     @Override
     public String toString() {
         return "Expense: " + "\n" +
-                "Type: " + type + "\n" +
-                "Amount: " + amount + "\n" +
-                "Date: " + date + "\n" +
-                "Comments: " + comments;
+            "Type: " + type + "\n" +
+            "Amount: " + amount + "\n" +
+            "Date: " + date + "\n" +
+            "Comments: " + comments;
     }
 
     public Expense(int tripId, String tripName, int id, String type, String amount, String date, String comments) {
