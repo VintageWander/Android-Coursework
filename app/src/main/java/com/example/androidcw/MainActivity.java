@@ -194,5 +194,12 @@ public class MainActivity extends AppCompatActivity {
 
 			requestQueue.add(stringRequest);
 		});
+
+		// Exit button
+		Button btnExit = findViewById(R.id.btnExit);
+		btnExit.setOnClickListener(view -> {
+			this.finish();
+			System.exit(0);
+		});
 	}
 }
